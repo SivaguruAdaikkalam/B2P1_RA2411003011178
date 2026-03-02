@@ -1,5 +1,28 @@
 import java.util.Scanner;
+import java.util.Stack;
 
+// Encapsulated class responsible only for palindrome logic
+class PalindromeChecker {
+
+    public boolean checkPalindrome(String input) {
+
+        Stack<Character> stack = new Stack<>();
+
+        for (int i = 0; i < input.length(); i++) {
+            stack.push(input.charAt(i));
+        }
+
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) != stack.pop()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
+
+// Main application class
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
@@ -9,33 +32,17 @@ public class PalindromeCheckerApp {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // Normalize string (remove spaces & convert to lowercase)
-        String normalized = input.replaceAll("\\s+", "").toLowerCase();
+        // Create object of PalindromeChecker
+        PalindromeChecker checker = new PalindromeChecker();
 
-        boolean isPalindrome = checkPalindrome(normalized);
+        boolean result = checker.checkPalindrome(input);
 
-        if (isPalindrome) {
-            System.out.println("The given string IS a palindrome (ignoring spaces and case).");
+        if (result) {
+            System.out.println("The given string IS a palindrome.");
         } else {
             System.out.println("The given string is NOT a palindrome.");
         }
 
         scanner.close();
-    }
-
-    public static boolean checkPalindrome(String str) {
-
-        int left = 0;
-        int right = str.length() - 1;
-
-        while (left < right) {
-            if (str.charAt(left) != str.charAt(right)) {
-                return false;
-            }
-            left++;
-            right--;
-        }
-
-        return true;
     }
 }
